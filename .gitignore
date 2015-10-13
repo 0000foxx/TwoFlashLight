@@ -1,3 +1,19 @@
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
 Two_FlashLight/bin/
-Two_FlashLight/local.properties
-Two_FlashLight/gen/
+build/
+*.iml
+gen/
+target/
+
+# Local configuration files (sdk path, etc)
+local.properties
