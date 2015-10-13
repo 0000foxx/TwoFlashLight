@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">雙面手電筒</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">雙面手電筒</string>
+	<string name="use_word">左右拖曳畫面,調整背面亮度\n\n上下拖曳畫面,調整正面亮度\n\n背景使用請按Home鍵\n\n關閉程式請按返回鍵</string>
+    
+</resources>
