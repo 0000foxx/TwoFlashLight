@@ -10,6 +10,7 @@
 
 # generated files
 Two_FlashLight/bin/
+Two_FlashLight/test/bin/
 build/
 *.iml
 gen/
