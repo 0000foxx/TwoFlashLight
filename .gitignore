@@ -16,4 +16,4 @@ gen/
 target/
 
 # Local configuration files (sdk path, etc)
-#local.properties
+local.properties
