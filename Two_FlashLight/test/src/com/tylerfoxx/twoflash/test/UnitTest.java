@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.tylerfoxx.twoflash.MainActivity;
+import com.twoflashlight.main.MainActivity;
 
 public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
 {
