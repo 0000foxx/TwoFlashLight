@@ -1,9 +1,11 @@
-package com.tylerfoxx.twoflash;
+package com.twoflashlight.main;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import FoXxLib.FP;
+import com.twoflashlight.utility.FP;
+import com.tylerfoxx.twoflash.R;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.hardware.Camera;

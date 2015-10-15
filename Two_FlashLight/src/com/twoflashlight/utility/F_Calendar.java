@@ -1,4 +1,4 @@
-package FoXxLib;
+package com.twoflashlight.utility;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,7 +11,7 @@ public class F_Calendar {
 		int year = 2006;
 		int week = 1;
 
-		// ¥H2006-01-02¦ì¨Ò
+		// ï¿½H2006-01-02ï¿½ï¿½ï¿½
 		Calendar c = new GregorianCalendar();
 		c.set(2006, Calendar.JANUARY, 2);
 		Date d = c.getTime();
@@ -30,7 +30,7 @@ public class F_Calendar {
 	
 	/**
 	 * 
-	 * µL°Ñ¼Æ¨ú±o¥Ø«e
+	 * ï¿½Lï¿½Ñ¼Æ¨ï¿½oï¿½Ø«e
 	 */
 	public F_Calendar(){
 		
@@ -53,7 +53,7 @@ public class F_Calendar {
 	
 	
 	/**
-	* ¨ú±o·í«e¤é´Á¬O¦h¤Ö¶g
+	* ï¿½ï¿½oï¿½ï¿½eï¿½ï¿½ï¿½ï¿½Oï¿½hï¿½Ö¶g
 	*
 	* @param date
 	* @return
@@ -68,7 +68,7 @@ public class F_Calendar {
 	}
 
 	/**
-	* ±o¨ì¬Y¤@¦~¶gªºÁ`¼Æ
+	* ï¿½oï¿½ï¿½Yï¿½@ï¿½~ï¿½gï¿½ï¿½ï¿½`ï¿½ï¿½
 	*
 	* @param year
 	* @return
@@ -81,7 +81,7 @@ public class F_Calendar {
 	}
 
 	/**
-	* ±o¨ì¬Y¦~¬Y¶gªº²Ä¤@¤Ñ
+	* ï¿½oï¿½ï¿½Yï¿½~ï¿½Yï¿½gï¿½ï¿½ï¿½Ä¤@ï¿½ï¿½
 	*
 	* @param year
 	* @param week
@@ -100,7 +100,7 @@ public class F_Calendar {
 	}
 
 	/**
-	* ±o¨ì¬Y¦~¬Y¶gªº³Ì«á¤@¤Ñ
+	* ï¿½oï¿½ï¿½Yï¿½~ï¿½Yï¿½gï¿½ï¿½ï¿½Ì«ï¿½@ï¿½ï¿½
 	*
 	* @param year
 	* @param week
@@ -119,7 +119,7 @@ public class F_Calendar {
 	}
 
 	/**
-	* ¨ú±o·í«e¤é´Á©Ò¦b¶gªº²Ä¤@¤Ñ
+	* ï¿½ï¿½oï¿½ï¿½eï¿½ï¿½ï¿½ï¿½Ò¦bï¿½gï¿½ï¿½ï¿½Ä¤@ï¿½ï¿½
 	*
 	* @param date
 	* @return
@@ -133,7 +133,7 @@ public class F_Calendar {
 	}
 
 	/**
-	* ¨ú±o·í«e¤é´Á©Ò¦b¶gªº³Ì«á¤@¤Ñ
+	* ï¿½ï¿½oï¿½ï¿½eï¿½ï¿½ï¿½ï¿½Ò¦bï¿½gï¿½ï¿½ï¿½Ì«ï¿½@ï¿½ï¿½
 	*
 	* @param date
 	* @return

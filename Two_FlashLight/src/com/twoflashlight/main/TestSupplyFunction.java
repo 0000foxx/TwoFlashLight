@@ -1,4 +1,4 @@
-package com.tylerfoxx.twoflash;
+package com.twoflashlight.main;
 
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;

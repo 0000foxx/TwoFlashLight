@@ -1,8 +1,7 @@
-package com.tylerfoxx.twoflash;
+package com.twoflashlight.main;
 
 import java.util.ArrayList;
 
-import FoXxLib.FP;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -24,6 +23,8 @@ import android.widget.LinearLayout;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
+import com.twoflashlight.utility.FP;
+import com.tylerfoxx.twoflash.R;
 
 public class MainActivity extends Activity 
 //implements SurfaceHolder.Callback
@@ -457,7 +458,7 @@ public class MainActivity extends Activity
 		
 		Notification nn = new Notification();
 //		nn.icon = R.drawable.notpic;
-		nn.tickerText = "Åwªï¨Ï¥ÎÂù­±¤â¹qµ©!!!";
+		nn.tickerText = "ï¿½wï¿½ï¿½Ï¥ï¿½ï¿½ï¿½ï¿½qï¿½ï¿½!!!";
 		
 //		if(tempi==1)
 //		{
@@ -465,7 +466,7 @@ public class MainActivity extends Activity
 //		}
 		
 		
-		nn.setLatestEventInfo(MainActivity.this, "Âù­±¤â¹qµ©", "Åwªï¨Ï¥ÎÂù­±¤â¹qµ©!!!", pi);
+		nn.setLatestEventInfo(MainActivity.this, "ï¿½ï¿½ï¿½qï¿½ï¿½", "ï¿½wï¿½ï¿½Ï¥ï¿½ï¿½ï¿½ï¿½qï¿½ï¿½!!!", pi);
 
 		NotificationManager nm;
 		nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
@@ -499,9 +500,9 @@ public class MainActivity extends Activity
 		
 //		// exit AlertDialog
 		Builder ad = new AlertDialog.Builder(MainActivity.this);
-		ad.setTitle("Äµ§i");//³]©wÄµ§i¼ÐÃD
-		ad.setMessage("½T©wÂ÷¶}??");//³]©wÄµ§i¤º®e
-		ad.setPositiveButton("½T©w", new DialogInterface.OnClickListener() {//³]©w«ö¶s1
+		ad.setTitle("Äµï¿½i");//ï¿½]ï¿½wÄµï¿½iï¿½ï¿½ï¿½D
+		ad.setMessage("ï¿½Tï¿½wï¿½ï¿½ï¿½}??");//ï¿½]ï¿½wÄµï¿½iï¿½ï¿½ï¿½e
+		ad.setPositiveButton("ï¿½Tï¿½w", new DialogInterface.OnClickListener() {//ï¿½]ï¿½wï¿½ï¿½ï¿½s1
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -511,17 +512,17 @@ public class MainActivity extends Activity
 				System.exit(0);
 				MainActivity.this.finish(); // exit program
 				
-//				//ÂI¿ï«ö¶s1«á°õ¦æªº°Ê§@
-//				//ÀË¬dºô¸ôª¬ºA
+//				//ï¿½Iï¿½ï¿½ï¿½ï¿½s1ï¿½ï¿½ï¿½ï¿½æªºï¿½Ê§@
+//				//ï¿½Ë¬dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½A
 //				ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 //
 //				NetworkInfo ni = cm.getActiveNetworkInfo();
-//				if (ni == null) {//¨S¦³ºô¸ô
+//				if (ni == null) {//ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //
-////					CopyRightFlow.this.finish();//µ²§ôµ{¦¡
+////					CopyRightFlow.this.finish();//ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½ï¿½
 //					System.exit(0);
 //				}
-//				else if (ni != null) {//­Y¦³ºô¸ô¥ý³sµ²¨ì¥~³¡ºô­¶
+//				else if (ni != null) {//ï¿½Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //
 //					if( ni.isConnected()){
 //						
@@ -530,7 +531,7 @@ public class MainActivity extends Activity
 ////					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 ////					startActivity(intent);
 //
-////					CopyRightFlow.this.finish();//¦Aµ²§ôµ{§Ç
+////					CopyRightFlow.this.finish();//ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½ï¿½
 //					System.exit(0);
 //					}
 //				}
@@ -539,7 +540,7 @@ public class MainActivity extends Activity
 				
 			}
 		});
-		ad.setNegativeButton("¨ú®ø", new DialogInterface.OnClickListener() {//³]©w«ö¶s2
+		ad.setNegativeButton("ï¿½ï¿½ï¿½", new DialogInterface.OnClickListener() {//ï¿½]ï¿½wï¿½ï¿½ï¿½s2
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
