@@ -1,4 +1,4 @@
-package FoXxLib;
+package com.twoflashlight.utility;
 
 public class F_UseString {
 

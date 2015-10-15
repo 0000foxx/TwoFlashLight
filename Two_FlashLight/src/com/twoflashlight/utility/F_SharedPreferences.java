@@ -1,5 +1,5 @@
 //This is sharedpreferences exam
-package FoXxLib;
+package com.twoflashlight.utility;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

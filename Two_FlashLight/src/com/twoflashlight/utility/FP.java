@@ -1,4 +1,4 @@
-package FoXxLib;
+package com.twoflashlight.utility;
 
 import android.util.Log;
 
