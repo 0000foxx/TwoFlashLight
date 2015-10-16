@@ -1,12 +1,7 @@
+package com.tylerfoxx.twoflash.test;
+
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.TouchUtils;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.twoflashlight.main.MainActivity;
 
