@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
-import com.twoflashlight.utility.FP;
+import com.twoflashlight.utility.TraceLogger;
 import com.tylerfoxx.twoflash.R;
 
 public class MainActivity extends Activity 
@@ -159,7 +159,7 @@ public class MainActivity extends Activity
     		}
     	}
     	
-    	FP.p("backLightIndex:"+backLightIndex);
+    	TraceLogger.print("backLightIndex:"+backLightIndex);
     	
     	if(backLightIndex==0){
     		p.setFlashMode(Parameters.FLASH_MODE_OFF);
@@ -209,7 +209,7 @@ public class MainActivity extends Activity
     		lp.screenBrightness =0.1f;
     	}
     	
-    	FP.p("lp.screenBrightness:"+lp.screenBrightness);
+    	TraceLogger.print("lp.screenBrightness:"+lp.screenBrightness);
     	
     	getWindow().setAttributes(lp);
     	
@@ -475,7 +475,7 @@ public class MainActivity extends Activity
 	
 	public boolean onKeyDown(int keycode, KeyEvent event){
 		
-		FP.p("keycode:"+keycode);
+		TraceLogger.print("keycode:"+keycode);
 		
 		switch(keycode){
 			
