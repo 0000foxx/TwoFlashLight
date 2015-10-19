@@ -4,6 +4,7 @@ package com.twoflashlight.test;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.twoflashlight.main.MainActivity;
+import com.twoflashlight.utility.TraceLogger;
 
 public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
 {
@@ -25,5 +26,9 @@ public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
         assertNotNull(mMainActivity);
     }
 
+    public void testTraceLoggerPrint()
+    {
+        TraceLogger.print("Test message from UnitTest");
+    }
 
 }
