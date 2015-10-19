@@ -1,4 +1,4 @@
-package com.tylerfoxx.twoflash.test;
+package com.twoflashlight.test;
 
 
 import android.test.ActivityInstrumentationTestCase2;
