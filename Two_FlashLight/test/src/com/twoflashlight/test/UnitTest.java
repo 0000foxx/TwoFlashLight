@@ -22,7 +22,7 @@ public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
     }
     
     public void testMainActivityNotNull(){
-        assertNull(mMainActivity);
+        assertNotNull(mMainActivity);
     }
 
 
