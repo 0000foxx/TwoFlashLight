@@ -23,38 +23,28 @@ import android.widget.LinearLayout;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
+import com.twoflashlight.utility.AdmobManager;
 import com.twoflashlight.utility.TraceLogger;
 import com.tylerfoxx.twoflash.R;
 
-public class MainActivity extends Activity 
-//implements SurfaceHolder.Callback
+public class MainActivity extends Activity
 {
 
-	static Camera c;
-    static Parameters p;
-	
-    public LayoutParams lp;
-    public PowerManager powerm;
-	public PowerManager.WakeLock WL;
-    
-//	ImageView backPic;
-	
-    public static int width;
-	public static int height;
-    
-	public int moveX;
-	public int backLightIndex;
-	public int moveY;
-	public int frontLightIndex;
-	
-//	SurfaceView sfc;
-//	SurfaceHolder sfh;
-	
-    AdView adview;
-    
-    int testnum;
-    
-    boolean isCameraUse;
+    private Camera mCamera;
+    private Parameters mParameters;
+
+    private LayoutParams mLayoutParams;
+
+    private PowerManager mPowerManager;
+    private PowerManager.WakeLock mWakeLock;
+
+    private int mScreenWidth;
+    private int mScreenHeight;
+
+    private int mXCoordinatesOfScreen;
+    private int mYCorrdinatesOfScreen;
+    private int mBackLightIndex;
+    private int mFrontLightIndex;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,355 +55,124 @@ public class MainActivity extends Activity
         
     }
     
-//    public void onPause(){
-//    	super.onPause();
-////    	c.release();
-//    }
-//	
-//    public void onResume(){
-//    	super.onResume();
-//    	if(c!=null){
-//    		c.release();
-//    		c.open();
-//    	}
-//    	else{
-//    		c.open();
-//    	}
-//    	
-//    }
-    
-//    public void onDestroy(){
-////    	super.onDestroy();
-//    	FP.p("destroy");
-//    	isCameraUse = false;
-//    	SharedPreferences sp = getSharedPreferences("flash", 0);
-//		SharedPreferences.Editor spe = sp.edit();
-//		
-//		spe.putBoolean("isCameraUse", isCameraUse);
-//		spe.commit();
-//    }
-    
-	void init(){
-		
-    	width = (getWindowManager().getDefaultDisplay().getWidth());
-		
-    	moveX = width/2;
-    	backLightIndex = 1;
-    	
-		height = (getWindowManager().getDefaultDisplay().getHeight());
-     
-		moveY = height/2;
-		frontLightIndex =5;
-        showAdmob();
-        
-
-        
-        c = Camera.open();
-        
-//        c.setDisplayOrientation(1);
-//        sfc = (SurfaceView)findViewById(R.id.surfaceView1);
-//        sfh = sfc.getHolder();
-//        sfh.addCallback(this);
-//        sfh.setType(SurfaceHolder.SURFACE_TYPE_NORMAL);
- 
-        p = c.getParameters();
-        p.setFlashMode(Parameters.FLASH_MODE_TORCH);
-        
-        c.setParameters(p);
-       
-//        c.startPreview();
-    	
-    	powerm = (PowerManager)getSystemService(Context.POWER_SERVICE);
-    	
-    	WL = powerm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "BackLight");
-    	
-    	WL.acquire();
-    	
-    	lp = getWindow().getAttributes();
-    	
-    	lp.screenBrightness = 0.1f;
-    	
-    	getWindow().setAttributes(lp);
-    	
-    	System.out.println("lp.screenBrightness:"+lp.screenBrightness);
-    	
-//    	backPic = (ImageView)findViewById(R.id.backpic);
-    	
-    	detBackLight();
-    	
-    	detFrontLight();
+    @Override
+    protected void onDestroy()
+    {
+        super.onPause();
+        mCamera.release();
+        mCamera = null;
     }
     
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        initCamera();
+        detBackLight();
+        detFrontLight();
+    }
+    
+    private void initCamera()
+    {
+        try {
+            mCamera = Camera.open();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+
+        if (mCamera != null) {
+            mParameters = mCamera.getParameters();
+            mParameters.setFlashMode(Parameters.FLASH_MODE_TORCH);
+            mCamera.setParameters(mParameters);
+        }
+    }
+    
+    private void init()
+    {
+
+        mScreenWidth = (getWindowManager().getDefaultDisplay().getWidth());
+        mXCoordinatesOfScreen = mScreenWidth / 2;
+        mBackLightIndex = 1;
+
+        mScreenHeight = (getWindowManager().getDefaultDisplay().getHeight());
+        mYCorrdinatesOfScreen = mScreenHeight / 2;
+        mFrontLightIndex = 5;
+
+        AdmobManager.showAdmob(this);
+
+        mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "BackLight");
+        mWakeLock.acquire();
+
+        mLayoutParams = getWindow().getAttributes();
+        mLayoutParams.screenBrightness = 0.1f;
+        getWindow().setAttributes(mLayoutParams);
+        System.out.println("lp.screenBrightness:" + mLayoutParams.screenBrightness);
+
+    }
+	
     void detBackLight(){
     	
     	ArrayList<Integer> widthal = new ArrayList<Integer>();
     	
     	for(int i=0; i<4; i++){
-    		widthal.add(i,width*i/3);
-//    		FP.p(""+widthal.get(i));
+    		widthal.add(i,mScreenWidth*i/3);
     	}
     	
     	for(int i=0; i<widthal.size()-1; i++){
-    		if(moveX>=widthal.get(i) && moveX<=widthal.get(i+1)){
-    			backLightIndex = i;
+    		if(mXCoordinatesOfScreen>=widthal.get(i) && mXCoordinatesOfScreen<=widthal.get(i+1)){
+    			mBackLightIndex = i;
     		}
     	}
     	
-    	TraceLogger.print("backLightIndex:"+backLightIndex);
+    	TraceLogger.print("backLightIndex:"+mBackLightIndex);
     	
-    	if(backLightIndex==0){
-    		p.setFlashMode(Parameters.FLASH_MODE_OFF);
-    		
-    	}
-    	else if(backLightIndex==1){
-    		
-    		p.setFocusMode("macro");
-    		p.setFlashMode(Parameters.FLASH_MODE_TORCH);
-    		
-    	}
-    	else if(backLightIndex==2){
-    		p.setFocusMode("auto");
-    		p.setFlashMode(Parameters.FLASH_MODE_TORCH);
-    	}
-    	
-    	try{
-    		//because some system no supply "p.setFocusMode("macro");" so must try{}catch(){}
-    		c.setParameters(p);
-    	}
-    	catch(Exception e){
-    		
-    	}
-    	
-    	
+        if (mParameters != null) {
+            if (mBackLightIndex == 0) {
+                mParameters.setFlashMode(Parameters.FLASH_MODE_OFF);
+            } else if (mBackLightIndex == 1) {
+                mParameters.setFocusMode("macro");
+                mParameters.setFlashMode(Parameters.FLASH_MODE_TORCH);
+
+            } else if (mBackLightIndex == 2) {
+                mParameters.setFocusMode("auto");
+                mParameters.setFlashMode(Parameters.FLASH_MODE_TORCH);
+            }
+            try {
+                // because some system no supply "p.setFocusMode("macro");" so must try{}catch(){}
+                mCamera.setParameters(mParameters);
+            } catch (Exception e) {
+
+            }
+        }
     }
     
     void detFrontLight(){
     	ArrayList<Integer> heightal = new ArrayList<Integer>();
     	
     	for(int i=0; i<10; i++){
-    		heightal.add(i,height*i/10);
-//    		FP.p(""+widthal.get(i));
+    		heightal.add(i,mScreenHeight*i/10);
     	}
     	
     	for(int i=0; i<heightal.size()-1; i++){
-    		if(moveY>=heightal.get(i) && moveY<=heightal.get(i+1)){
-    			frontLightIndex = i;
+    		if(mYCorrdinatesOfScreen>=heightal.get(i) && mYCorrdinatesOfScreen<=heightal.get(i+1)){
+    			mFrontLightIndex = i;
     		}
     	}
     	
-//    	FP.p("frontLightIndex:"+frontLightIndex);
+    	mLayoutParams.screenBrightness = (float)mFrontLightIndex/10;
     	
-    	lp.screenBrightness = (float)frontLightIndex/10;
-    	
-    	if(lp.screenBrightness<=0.1f){
-    		lp.screenBrightness =0.1f;
+    	if(mLayoutParams.screenBrightness<=0.1f){
+    		mLayoutParams.screenBrightness =0.1f;
     	}
     	
-    	TraceLogger.print("lp.screenBrightness:"+lp.screenBrightness);
+    	TraceLogger.print("lp.screenBrightness:"+mLayoutParams.screenBrightness);
     	
-    	getWindow().setAttributes(lp);
+    	getWindow().setAttributes(mLayoutParams);
     	
     }
-    
-//    @Override
-//	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-//			int height) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void surfaceCreated(SurfaceHolder holder) {
-//		// TODO Auto-generated method stub
-//		try {
-//			c.setPreviewDisplay(holder);
-////			sfh.addCallback(MainActivity.this);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//	}
-//
-//	@Override
-//	public void surfaceDestroyed(SurfaceHolder holder) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-    
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.activity_main, menu);
-//        return true;
-//    }
-//
-//   
-//    
-   
-    
-//    int testindex =0;
-//    @TargetApi(14)
-//	void testSupplyFunction(int type){
-//    	
-//    	if(type==0){
-//    		String s = p.getFlashMode();
-//    		if(s.equals(Parameters.FLASH_MODE_TORCH)){
-//    			p.setFlashMode(Parameters.FLASH_MODE_OFF);
-//    		}
-//    		else if(s.equals(Parameters.FLASH_MODE_OFF)){
-//    			p.setFlashMode(Parameters.FLASH_MODE_TORCH);
-//    		}
-//    	}
-//    	else if(type==1){
-//        	p.setAutoWhiteBalanceLock(false);
-//    		
-//    		List<String> autowhitelist = new ArrayList<String>();
-//    		
-//    		autowhitelist = p.getSupportedWhiteBalance();
-//    		
-////    		for(String s : autowhitelist){
-////    			FP.p(""+s);
-////    		}
-//    		
-//    		if(testindex<autowhitelist.size())
-//    		{
-//    			FP.p("autowhitelist.get(tempindex): "+autowhitelist.get(testindex));
-//    			p.setWhiteBalance(autowhitelist.get(testindex++));
-//    			
-//    		}
-//    		else{
-//    			testindex =0;
-//    		}
-//    	}
-//    	else if(type==2){
-//    		//antibind is null
-//    		List<String> antibindlist = new ArrayList<String>();
-//    		antibindlist = p.getSupportedAntibanding();
-//    		
-////    		FP.p("antiblist:"+antibindlist);
-//    		
-////    		for(String s : antibindlist){
-////			FP.p(""+s);
-////    		}
-//    		
-//    		if(testindex<antibindlist.size()){
-//    			FP.p("antiband:"+antibindlist.get(testindex));
-//    			p.setAntibanding(antibindlist.get(testindex++));
-//    		}
-//    		else
-//    			testindex =0;
-//    	}
-//    	else if(type==3){
-//    		int maxec = p.getMaxExposureCompensation();
-//    		int minec = p.getMinExposureCompensation();
-////    		FP.p(""+maxec);
-////    		FP.p(""+minec);
-//    		if(testindex<=maxec){
-//    			p.setExposureCompensation(testindex++);
-//    			FP.p("testindex:"+testindex);
-//    		}
-//    		else{
-//    			testindex = minec;
-//    		}
-//    		
-//    	}
-//    	else if(type==4){
-//    		//null
-//    		List<Camera.Area> calist = new ArrayList<Camera.Area>();
-//    		calist = p.getMeteringAreas();
-//    		FP.p("callist:"+calist);
-//    		for(Camera.Area ca : calist){
-//    			FP.p("weight"+ca.weight+" ca.rect.width:"+ca.rect.width()+" ca.rect.height:"+ca.rect.height());
-//    		}
-//    		
-////    		p.setMeteringAreas(calist.get(testindex));
-//    	}
-//    	else if(type==5){
-//    		List<String> colorEffList = new ArrayList<String>();
-//    		colorEffList = p.getSupportedColorEffects();
-//    		
-////    		for(String s : colorEffList){
-////    			FP.p("coloreff:"+s);
-////    		}
-//    		
-//    		if(testindex<colorEffList.size()){
-//    			FP.p("testindex:"+colorEffList.get(testindex));
-//    		p.setColorEffect(colorEffList.get(testindex++));
-//    		
-//    		}
-//    		else
-//    			testindex =0;
-//    		
-//    	}
-//    	else if(type==6){
-//    		List<String> flashList = new ArrayList<String>();
-//    		flashList = p.getSupportedFlashModes();
-//    		
-//    		for(String s : flashList){
-//    			FP.p(""+s);
-//    		}
-//    		
-//    		if(testindex<flashList.size()){
-//    			p.setFlashMode(flashList.get(testindex++));
-//    		}
-//    		else
-//    			testindex =0;
-//    		
-//    	}
-//    	else if(type==7){
-//    		List<String> fList = new ArrayList<String>();
-//    		fList = p.getSupportedFocusModes();
-////    		for(String s : fList)
-////    			FP.p("flist:"+s);
-//    		
-//    		if(testindex<fList.size()){
-//    			FP.p(""+fList.get(testindex));
-//    			p.setFocusMode(fList.get(testindex++));
-////    			p.setFocusMode("macro");
-////    			p.setFocusMode("auto");
-//    		}
-//    		else
-//    			testindex =0;
-//    	}
-//    	else if(type==8){
-//    		List<String> sList = new ArrayList<String>();
-//    		sList = p.getSupportedSceneModes();
-//    		
-////    		for(String s : sList){
-////    			FP.p(""+s);
-////    		}
-//    		
-//    		if(testindex<sList.size()){
-//    			FP.p(""+sList.get(testindex));
-//    			p.setSceneMode(sList.get(testindex++));
-//    		}
-//    		else
-//    			testindex =0;
-//    		
-//    	}
-//    	
-//		c.setParameters(p);
-//    	
-//    }
-    
-    
-	void showAdmob(){
-		
-	AdView adView;
-		
-//  	  Create the adView     
-   	adView = new AdView(this, AdSize.BANNER, "a150c81d1f5acca");      
- 
-   	LinearLayout layout = (LinearLayout)findViewById(R.id.AdLayout);      
-   	   
-   	layout.addView(adView);
-   	
-   	adView.loadAd(new AdRequest()); 
-	}
 	
 	public boolean onTouchEvent(MotionEvent event){
-//		FP.p("in onTouchEvent");
-		
 		
 		switch(event.getAction()){
 		
@@ -428,10 +187,8 @@ public class MainActivity extends Activity
 			break;
 			
 		case MotionEvent.ACTION_MOVE:
-			moveX = (int)event.getX();
-			moveY = (int)event.getY();
-			
-//			FP.p("moveX:"+moveX+" moveY:"+moveY);
+			mXCoordinatesOfScreen = (int)event.getX();
+			mYCorrdinatesOfScreen = (int)event.getY();
 			
 			detBackLight();
 			detFrontLight();
@@ -445,26 +202,15 @@ public class MainActivity extends Activity
 	
 	void nmShow(){
 		
-//		// get data for accountdetail
-//		SharedPreferences sp = getSharedPreferences("bcn", 0);
-//		SharedPreferences.Editor spe3 = sp.edit();
-//
-//		// get accountdetail count
-//		int tempi = sp.getInt("adplaynum", playNum);
 		
 		Intent it = new Intent(this,MainActivity.class);
 		it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 0, it, 0);
 		
 		Notification nn = new Notification();
-//		nn.icon = R.drawable.notpic;
 		nn.tickerText = "�w��ϥ����q��!!!";
 		
-//		if(tempi==1)
-//		{
 			nn.defaults = Notification.DEFAULT_ALL;
-//		}
-		
 		
 		nn.setLatestEventInfo(MainActivity.this, "���q��", "�w��ϥ����q��!!!", pi);
 
@@ -496,8 +242,6 @@ public class MainActivity extends Activity
 	
 	
 	public void finishApp() {
-		// TODO Auto-generated method stub
-		
 //		// exit AlertDialog
 		Builder ad = new AlertDialog.Builder(MainActivity.this);
 		ad.setTitle("ĵ�i");//�]�wĵ�i���D
@@ -512,32 +256,6 @@ public class MainActivity extends Activity
 				System.exit(0);
 				MainActivity.this.finish(); // exit program
 				
-//				//�I����s1����檺�ʧ@
-//				//�ˬd�������A
-//				ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//
-//				NetworkInfo ni = cm.getActiveNetworkInfo();
-//				if (ni == null) {//�S������
-//
-////					CopyRightFlow.this.finish();//�����{��
-//					System.exit(0);
-//				}
-//				else if (ni != null) {//�Y��������s����~������
-//
-//					if( ni.isConnected()){
-//						
-//					
-////					Uri uri = Uri.parse("https://play.google.com/store/apps/developer?id=Vulpse");
-////					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-////					startActivity(intent);
-//
-////					CopyRightFlow.this.finish();//�A�����{��
-//					System.exit(0);
-//					}
-//				}
-//				
-//				All_List.this.finish(); // exit program
-				
 			}
 		});
 		ad.setNegativeButton("���", new DialogInterface.OnClickListener() {//�]�w���s2
@@ -550,8 +268,5 @@ public class MainActivity extends Activity
 		});
 		
 		ad.show();
-		
-//		System.exit(0);
-		
 	}
 }
