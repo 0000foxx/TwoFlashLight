@@ -8,7 +8,6 @@ import android.app.AlertDialog.Builder;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Camera;
@@ -18,12 +17,9 @@ import android.os.PowerManager;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.WindowManager.LayoutParams;
-import android.widget.LinearLayout;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
 import com.twoflashlight.utility.AdmobManager;
+import com.twoflashlight.utility.ScreenWakeLockManager;
 import com.twoflashlight.utility.TraceLogger;
 import com.tylerfoxx.twoflash.R;
 
@@ -34,9 +30,6 @@ public class MainActivity extends Activity
     private Parameters mParameters;
 
     private LayoutParams mLayoutParams;
-
-    private PowerManager mPowerManager;
-    private PowerManager.WakeLock mWakeLock;
 
     private int mScreenWidth;
     private int mScreenHeight;
@@ -86,29 +79,35 @@ public class MainActivity extends Activity
             mCamera.setParameters(mParameters);
         }
     }
-    
+
     private void init()
     {
+        countBackLightIndex();
+        countFrontLightIndex();
+        AdmobManager.showAdmob(this);
+        ScreenWakeLockManager.makeScreenWakeLock(this);
+        setScreenBrightness(0.1f);
+    }
 
-        mScreenWidth = (getWindowManager().getDefaultDisplay().getWidth());
-        mXCoordinatesOfScreen = mScreenWidth / 2;
-        mBackLightIndex = 1;
-
+    private void countFrontLightIndex()
+    {
         mScreenHeight = (getWindowManager().getDefaultDisplay().getHeight());
         mYCorrdinatesOfScreen = mScreenHeight / 2;
         mFrontLightIndex = 5;
+    }
 
-        AdmobManager.showAdmob(this);
+    private void countBackLightIndex()
+    {
+        mScreenWidth = (getWindowManager().getDefaultDisplay().getWidth());
+        mXCoordinatesOfScreen = mScreenWidth / 2;
+        mBackLightIndex = 1;
+    }
 
-        mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        mWakeLock = mPowerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "BackLight");
-        mWakeLock.acquire();
-
+    private void setScreenBrightness(float brightness)
+    {
         mLayoutParams = getWindow().getAttributes();
-        mLayoutParams.screenBrightness = 0.1f;
+        mLayoutParams.screenBrightness = brightness;
         getWindow().setAttributes(mLayoutParams);
-        System.out.println("lp.screenBrightness:" + mLayoutParams.screenBrightness);
-
     }
 	
     void detBackLight(){
@@ -200,24 +199,18 @@ public class MainActivity extends Activity
 			return true;
 	}
 	
-	void nmShow(){
-		
-		
-		Intent it = new Intent(this,MainActivity.class);
-		it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 0, it, 0);
-		
-		Notification nn = new Notification();
-		nn.tickerText = "�w��ϥ����q��!!!";
-		
-			nn.defaults = Notification.DEFAULT_ALL;
-		
-		nn.setLatestEventInfo(MainActivity.this, "���q��", "�w��ϥ����q��!!!", pi);
-
-		NotificationManager nm;
-		nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-		nm.notify(0, nn);
-	}
+    private void showNotificationToTitleBar()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, 0);
+        Notification notification = new Notification();
+        notification.tickerText = "TwoFlashLight!!!";
+        notification.defaults = Notification.DEFAULT_ALL;
+        notification.setLatestEventInfo(MainActivity.this, "TwoFlashLight", "Welcome to use!!!", pendingIntent);
+        NotificationManager notificatoinManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificatoinManager.notify(0, notification);
+    }
 	
 	public boolean onKeyDown(int keycode, KeyEvent event){
 		
@@ -233,7 +226,7 @@ public class MainActivity extends Activity
 		//back key
 		case 4:
 			//finish app
-			finishApp();
+			showExitDialog();
 			return false;
 		}
 		
@@ -241,32 +234,28 @@ public class MainActivity extends Activity
 	}
 	
 	
-	public void finishApp() {
-//		// exit AlertDialog
-		Builder ad = new AlertDialog.Builder(MainActivity.this);
-		ad.setTitle("ĵ�i");//�]�wĵ�i���D
-		ad.setMessage("�T�w���}??");//�]�wĵ�i���e
-		ad.setPositiveButton("�T�w", new DialogInterface.OnClickListener() {//�]�w���s1
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				
-				nmShow();
-				
-				System.exit(0);
-				MainActivity.this.finish(); // exit program
-				
-			}
-		});
-		ad.setNegativeButton("���", new DialogInterface.OnClickListener() {//�]�w���s2
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				
-			
-			}
-		});
-		
-		ad.show();
-	}
+    private void showExitDialog()
+    {
+        Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setTitle("Warning");
+        dialog.setMessage("Exit Application??");
+        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                showNotificationToTitleBar();
+                MainActivity.this.finish();
+            }
+        });
+        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+            }
+        });
+
+        dialog.show();
+    }
 }
