@@ -1,34 +1,99 @@
+
 package com.twoflashlight.test;
 
-
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.KeyEvent;
 
+import com.robotium.solo.Solo;
 import com.twoflashlight.main.MainActivity;
-import com.twoflashlight.utility.TraceLogger;
 
 public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
 {
-    private MainActivity mMainActivity;
-    
-    public UnitTest(){
+    private static final int MOVE_STEP_ON_SCREEN = 20;
+    private Solo mMainActivity;
+
+    public UnitTest() {
         super(MainActivity.class);
     }
-    
+
     @Override
     protected void setUp() throws Exception
     {
         super.setUp();
-        setActivityInitialTouchMode(true);
-        mMainActivity = getActivity();
-    }
-    
-    public void testMainActivityNotNull(){
-        assertNotNull(mMainActivity);
+        mMainActivity = new Solo(getInstrumentation(), getActivity());
     }
 
-    public void testTraceLoggerPrint()
+    private void testChangeLightFunction()
     {
-        TraceLogger.print("Test message from UnitTest");
+        testChangeBackLightToMin();
+        testChangeFrontLightToMax();
+        testChangeBackLightToMax();
+        testChangeFrontLightToMin();
+    }
+
+    private void testChangeBackLightToMax()
+    {
+        float startX = 0;
+        float endX = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getWidth();
+        float startY = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getHeight() / 2;
+        float endY = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getHeight() / 2;
+        mMainActivity.drag(startX, endX, startY, endY, MOVE_STEP_ON_SCREEN);
+    }
+
+    private void testChangeBackLightToMin()
+    {
+        float startX = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getWidth();
+        float endX = 0;
+        float startY = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getHeight() / 2;
+        float endY = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getHeight() / 2;
+        mMainActivity.drag(startX, endX, startY, endY, MOVE_STEP_ON_SCREEN);
+    }
+
+    private void testChangeFrontLightToMax()
+    {
+        float startY = 0;
+        float endY = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getHeight();
+        float startX = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getWidth() / 2;
+        float endX = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getWidth() / 2;
+        mMainActivity.drag(startX, endX, startY, endY, MOVE_STEP_ON_SCREEN);
+    }
+
+    private void testChangeFrontLightToMin()
+    {
+        float endY = 0;
+        float startY = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getHeight();
+        float startX = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getWidth() / 2;
+        float endX = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
+                .getWidth() / 2;
+        mMainActivity.drag(startX, endX, startY, endY, MOVE_STEP_ON_SCREEN);
+    }
+
+    private void testExitDialogFunction()
+    {
+        mMainActivity.sendKey(KeyEvent.KEYCODE_BACK);
+        mMainActivity.searchText("Warning");
+        mMainActivity.clickLongOnText("No");
+        mMainActivity.sendKey(KeyEvent.KEYCODE_BACK);
+        mMainActivity.searchText("Warning");
+        mMainActivity.clickLongOnText("Yes");
+    }
+
+    public void testMainActivityFunction()
+    {
+        testChangeLightFunction();
+        testExitDialogFunction();
+        assertNotNull(mMainActivity);
     }
 
 }

@@ -171,33 +171,28 @@ public class MainActivity extends Activity
     	
     }
 	
-	public boolean onTouchEvent(MotionEvent event){
-		
-		switch(event.getAction()){
-		
-		case MotionEvent.ACTION_DOWN:
-			
-			
-			break;
-			
-		case MotionEvent.ACTION_UP:
-			
-			
-			break;
-			
-		case MotionEvent.ACTION_MOVE:
-			mXCoordinatesOfScreen = (int)event.getX();
-			mYCorrdinatesOfScreen = (int)event.getY();
-			
-			detBackLight();
-			detFrontLight();
-			
-			break;
-			
-		}
-		
-			return true;
-	}
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                adjustLight(event);
+                break;
+        }
+        return true;
+    }
+
+    private void adjustLight(MotionEvent event)
+    {
+        getCoordinatesOnScreen(event);
+        detBackLight();
+        detFrontLight();
+    }
+
+    private void getCoordinatesOnScreen(MotionEvent event)
+    {
+        mXCoordinatesOfScreen = (int) event.getX();
+        mYCorrdinatesOfScreen = (int) event.getY();
+    }
 	
     private void showNotificationToTitleBar()
     {
@@ -212,26 +207,18 @@ public class MainActivity extends Activity
         notificatoinManager.notify(0, notification);
     }
 	
-	public boolean onKeyDown(int keycode, KeyEvent event){
-		
-		TraceLogger.print("keycode:"+keycode);
-		
-		switch(keycode){
-			
-		// menu key
-		case 82:
-//			nmShow();
-			//background use
-			break;
-		//back key
-		case 4:
-			//finish app
-			showExitDialog();
-			return false;
-		}
-		
-		return super.onKeyDown(keycode, event);
-	}
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent event)
+    {
+        super.onKeyDown(keycode, event);
+        TraceLogger.print("keycode:" + keycode);
+        switch (keycode) {
+            case KeyEvent.KEYCODE_BACK:
+                showExitDialog();
+                return true;
+        }
+        return false;
+    }
 	
 	
     private void showExitDialog()
