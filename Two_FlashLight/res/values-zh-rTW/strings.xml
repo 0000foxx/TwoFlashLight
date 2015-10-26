@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">雙面手電筒</string>
+    <string name="menu_settings">設定</string>
+    <string name="title_activity_main">雙面手電筒</string>
+    <string name="operate_hint">左右拖曳畫面,調整背面亮度\n\n上下拖曳畫面,調整正面亮度\n\n背景使用請按Home鍵\n\n關閉程式請按返回鍵</string>
+    <string name="exit_dialog_title">警告!!</string>
+    <string name="exit_dialog_message">離開應用程式??</string>
+    <string name="exit_dialog_yes">是</string>
+    <string name="exit_dialog_no">否</string>
+    <string name="notification_text">雙面手電筒!!!</string>
+    <string name="notification_welcomeUse">歡迎使用!!!</string>
+</resources>

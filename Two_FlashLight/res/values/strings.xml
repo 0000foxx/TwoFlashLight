@@ -1,9 +1,16 @@
 <resources>
 
-    <string name="app_name">雙面手電筒</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">TwoFlashLight</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">雙面手電筒</string>
-	<string name="use_word">左右拖曳畫面,調整背面亮度\n\n上下拖曳畫面,調整正面亮度\n\n背景使用請按Home鍵\n\n關閉程式請按返回鍵</string>
-    
+    <string name="title_activity_main">Two Flash Light</string>
+    <string name="operate_hint">Drag around the screen , adjust the brightness of the back\n\n
+	    Drag up or down the screen , adjust the front luminance\n\nPress the Home key for background use\n\n
+	    please press the back key to close app</string>
+    <string name="exit_dialog_title">Warning!!</string>
+    <string name="exit_dialog_message">Exit Application??</string>
+    <string name="exit_dialog_yes">Yes</string>
+    <string name="exit_dialog_no">No</string>
+    <string name="notification_text">TwoFlashLight!!!</string>
+    <string name="notification_welcomeUse">Welcome to Use!!!</string>
+
 </resources>
