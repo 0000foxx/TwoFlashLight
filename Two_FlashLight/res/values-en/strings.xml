@@ -1,22 +1,16 @@
 <resources>
 
-    <string name="app_name">Two Flash</string>
-    <string name="app_name2">GetDisplaySize</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">TwoFlashLight</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">Two Flash</string>
-	<string name="title_activity_main2">GetDisplaySize</string>
-    
-    <string name="copy_right">版權聲明： 本軟體屬於教學、知識、智慧傳承為主，僅提供教學與學術上及個人生活之免費使用（屬於非營利的使用）。 本軟體部份文章是從各網站及朋友所發的mail摘錄(轉貼)下來的，部份已不可考，因轉貼的文章居多， 如有侵權請來信告知！ 本軟體所引用之圖片及資料，其商標及著作權屬各原創公司或個人所有，本軟體之引用純屬教學參考及 介紹，絕無任何侵犯之意。 本軟體內，所有討論、發言、文章、圖片版權，皆屬原發言人所有，欲轉載、引用，請事先取得原發言人或作者同意。 本軟體內以超連結（hyper link）方式向外所連結的網站之著作權屬原該網站建構或維護單位所有。 若您認為本軟體內容侵犯您權益，請來信告知zgh149@gmail.com，必將儘速處理。</string>
-    
-    <string name="_linearlayout">這是 LinearLayout</string>
-    
-    <string name="LinearLayout">LinearLayout</string>
-    
-    <string name="add_record">Add Record</string>
-    <string name="exit">Exit</string>
-    
-    <string name="use_word">Drag and Move horizontal to adjust background Light\n\nDrag and Move vertical to adjust screen Light
-        \n\nPress Home Key to use in background\n\nPress back key to stop App</string>
-    
+    <string name="title_activity_main">Two Flash Light</string>
+    <string name="operate_hint">Drag around the screen , adjust the brightness of the back\n\n
+	    Drag up or down the screen , adjust the front luminance\n\nPress the Home key for background use\n\n
+	    please press the back key to close app</string>
+    <string name="exit_dialog_title">Warning!!</string>
+    <string name="exit_dialog_message">Exit Application??</string>
+    <string name="exit_dialog_yes">Yes</string>
+    <string name="exit_dialog_no">No</string>
+    <string name="notification_text">TwoFlashLight!!!</string>
+    <string name="notification_welcomeUse">Welcome to Use!!!</string>
+
 </resources>

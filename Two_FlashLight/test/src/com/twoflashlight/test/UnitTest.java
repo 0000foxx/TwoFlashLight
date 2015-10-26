@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 
 import com.robotium.solo.Solo;
 import com.twoflashlight.main.MainActivity;
+import com.tylerfoxx.twoflash.R;
 
 public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
 {
@@ -82,11 +83,11 @@ public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
     private void testExitDialogFunction()
     {
         mMainActivity.sendKey(KeyEvent.KEYCODE_BACK);
-        mMainActivity.searchText("Warning");
-        mMainActivity.clickLongOnText("No");
+        mMainActivity.searchText(mMainActivity.getString(R.string.exit_dialog_title));
+        mMainActivity.clickLongOnText(mMainActivity.getString(R.string.exit_dialog_no));
         mMainActivity.sendKey(KeyEvent.KEYCODE_BACK);
-        mMainActivity.searchText("Warning");
-        mMainActivity.clickLongOnText("Yes");
+        mMainActivity.searchText(mMainActivity.getString(R.string.exit_dialog_title));
+        mMainActivity.clickLongOnText(mMainActivity.getString(R.string.exit_dialog_yes));
     }
 
     public void testMainActivityFunction()
