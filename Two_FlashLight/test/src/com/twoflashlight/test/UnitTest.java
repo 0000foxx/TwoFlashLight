@@ -5,16 +5,16 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
 
 import com.robotium.solo.Solo;
-import com.twoflashlight.main.MainActivity;
+import com.twoflashlight.main.CameraActivity;
 import com.tylerfoxx.twoflash.R;
 
-public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
+public class UnitTest extends ActivityInstrumentationTestCase2<CameraActivity>
 {
     private static final int MOVE_STEP_ON_SCREEN = 20;
     private Solo mMainActivity;
 
     public UnitTest() {
-        super(MainActivity.class);
+        super(CameraActivity.class);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
         mMainActivity = new Solo(getInstrumentation(), getActivity());
     }
 
-    private void testChangeLightFunction()
+    public void testChangeLightFunction()
     {
         testChangeBackLightToMin();
         testChangeFrontLightToMax();
@@ -32,7 +32,7 @@ public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
         testChangeFrontLightToMin();
     }
 
-    private void testChangeBackLightToMax()
+    public void testChangeBackLightToMax()
     {
         float startX = 0;
         float endX = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
@@ -44,7 +44,7 @@ public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
         mMainActivity.drag(startX, endX, startY, endY, MOVE_STEP_ON_SCREEN);
     }
 
-    private void testChangeBackLightToMin()
+    public void testChangeBackLightToMin()
     {
         float startX = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
                 .getWidth();
@@ -56,7 +56,7 @@ public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
         mMainActivity.drag(startX, endX, startY, endY, MOVE_STEP_ON_SCREEN);
     }
 
-    private void testChangeFrontLightToMax()
+    public void testChangeFrontLightToMax()
     {
         float startY = 0;
         float endY = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
@@ -68,7 +68,7 @@ public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
         mMainActivity.drag(startX, endX, startY, endY, MOVE_STEP_ON_SCREEN);
     }
 
-    private void testChangeFrontLightToMin()
+    public void testChangeFrontLightToMin()
     {
         float endY = 0;
         float startY = mMainActivity.getCurrentActivity().getWindowManager().getDefaultDisplay()
@@ -80,7 +80,7 @@ public class UnitTest extends ActivityInstrumentationTestCase2<MainActivity>
         mMainActivity.drag(startX, endX, startY, endY, MOVE_STEP_ON_SCREEN);
     }
 
-    private void testExitDialogFunction()
+    public void testExitDialogFunction()
     {
         mMainActivity.sendKey(KeyEvent.KEYCODE_BACK);
         mMainActivity.searchText(mMainActivity.getString(R.string.exit_dialog_title));
