@@ -31,13 +31,19 @@ import com.tylerfoxx.twoflash.R;
 public class AdmobManager
 {
 
-    private static final String AD_UNIT_ID = "a150c81d1f5acca";
+    // NOTE: 請填入自己的 AdMob publisher / ad-unit ID。
+    // 原始碼不再內嵌正式廣告 ID，避免 fork 後廣告流量計入他人帳號 (claude/2026-06)。
+    private static final String AD_UNIT_ID = "YOUR_ADMOB_AD_UNIT_ID";
 
     public static void showAdmob(Activity activity)
     {
         AdView adView = new AdView(activity, AdSize.BANNER, AD_UNIT_ID);
         LinearLayout layout = (LinearLayout) activity.findViewById(R.id.AdLayout);
         layout.addView(adView);
-        adView.loadAd(new AdRequest());
+
+        // 預設以測試模式載入廣告，避免在開發/fork 環境產生無效曝光。
+        AdRequest request = new AdRequest();
+        request.addTestDevice(AdRequest.TEST_EMULATOR);
+        adView.loadAd(request);
     }
 }
