@@ -1,5 +1,10 @@
 # TwoFlashLight (雙面手電筒)
 
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/0000foxx/TwoFlashLight)](https://github.com/0000foxx/TwoFlashLight/releases)
+[![Language: Java](https://img.shields.io/badge/language-Java-orange.svg)](#)
+[![Platform: Android](https://img.shields.io/badge/platform-Android-green.svg)](#)
+
 A lightweight open-source Android flashlight that uses **both** the rear camera LED
 **and** the front screen as light sources at the same time — adjust each
 independently with simple drag gestures.
